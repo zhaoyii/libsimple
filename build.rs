@@ -5,6 +5,12 @@ fn main() {
 
     let mut cfg = cc::Build::new();
 
+    if cfg!(target_os = "windows") {
+        // 设置MT_StaticRelease
+        cfg.flag("/MT"); // 对于静态链接的运行时库
+        cfg.flag("/DNDEBUG"); // 禁用调试信息
+    }
+
     cfg.include("simple/src");
     cfg.file("simple/src/pinyin.h");
     cfg.file("simple/src/simple_highlight.h");
